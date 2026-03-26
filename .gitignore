@@ -1,0 +1,53 @@
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.log
+target/
+build/
+out/
+
+# Spring Boot
+*.pid
+
+# Node.js / Frontend
+node_modules/
+dist/
+.pnpm-store/
+*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Uploads
+uploads/
+
+# Test coverage
+coverage/
+
+# Build artifacts
+*.tsbuildinfo
