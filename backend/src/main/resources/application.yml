@@ -42,11 +42,11 @@ jwt:
 
 ai:
   api-key: ${AI_API_KEY}
-  base-url: https://openrouter.ai/api/v1
   timeout: 60000
-  default-model: nvidia/nemotron-3-super-120b-a12b:free
   max-tokens: 2000
   temperature: 0.7
+  base-url: https://openrouter.ai/api/v1
+  default-model: nvidia/nemotron-3-super-120b-a12b:free
   model-list:
     - nvidia/nemotron-3-super-120b-a12b:free
 
