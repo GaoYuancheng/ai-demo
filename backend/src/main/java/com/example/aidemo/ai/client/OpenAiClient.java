@@ -54,8 +54,7 @@ public class OpenAiClient {
                     aiProperties.getBaseUrl() + "/chat/completions",
                     HttpMethod.POST,
                     request,
-                    JsonNode.class
-            );
+                    JsonNode.class);
 
             if (response.getStatusCode() == HttpStatus.OK && response.getBody() != null) {
                 JsonNode choices = response.getBody().path("choices");

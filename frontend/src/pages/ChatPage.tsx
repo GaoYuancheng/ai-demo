@@ -26,6 +26,7 @@ export default function ChatPage() {
   const provider = useMemo(() => createAiChatProvider(), [token]);
 
   const senderZhRef = useRef<GetRef<typeof Sender>>(null);
+  const chatContentRef = useRef<HTMLDivElement>(null);
 
   const { messages, onRequest, isRequesting, abort, setMessages } = useXChat<
     ChatMessage,
@@ -69,6 +70,13 @@ export default function ChatPage() {
       provider.setSessionId(currentSessionId);
     }
   }, [currentSessionId]);
+
+  // 当消息更新时自动滚动到底部
+  useEffect(() => {
+    if (chatContentRef.current) {
+      chatContentRef.current.scrollTop = chatContentRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   const loadSessions = async () => {
     try {
@@ -213,7 +221,7 @@ export default function ChatPage() {
           selectedModel={selectedModel}
           onModelChange={handleModelChange}
         />
-        <div className="chat-content">
+        <div className="chat-content" ref={chatContentRef}>
           {loading ? (
             <div className="chat-loading">
               <span>加载中...</span>
