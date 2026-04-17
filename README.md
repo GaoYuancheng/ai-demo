@@ -7,6 +7,7 @@ AI Demo 是一个基于 Spring Boot + React 的智能聊天应用，集成了 Op
 ## 技术栈
 
 ### 后端
+
 - Spring Boot 3.2.3
 - Java 17
 - MyBatis-Plus 3.5.5
@@ -16,6 +17,7 @@ AI Demo 是一个基于 Spring Boot + React 的智能聊天应用，集成了 Op
 - Hutool 工具库
 
 ### 前端
+
 - React 18.3.1
 - TypeScript
 - Ant Design 6.3.4
@@ -63,29 +65,34 @@ ai-demo/
 ## 核心功能
 
 ### 1. AI 聊天功能
+
 - 支持与 AI 模型进行对话
 - 会话管理（创建、切换、删除）
 - 聊天历史记录
 - 模型配置管理
 
 ### 2. 用户认证
+
 - 用户注册
 - 用户登录
 - JWT 令牌验证
 - 权限控制
 
 ### 3. 文件上传
+
 - 支持文件上传功能
 - 文件存储管理
 
 ## 环境要求
 
 ### 后端
+
 - JDK 17+
 - Maven 3.6+
 - MySQL 8.0+
 
 ### 前端
+
 - Node.js 18+
 - pnpm 9+
 
@@ -127,10 +134,12 @@ pnpm dev
 ## API 接口
 
 ### 认证接口
+
 - `POST /api/auth/register` - 用户注册
 - `POST /api/auth/login` - 用户登录
 
 ### AI 接口
+
 - `GET /api/ai/config` - 获取 AI 配置
 - `PUT /api/ai/config` - 更新 AI 配置
 - `POST /api/ai/sessions` - 创建会话
@@ -140,6 +149,7 @@ pnpm dev
 - `POST /api/ai/chat` - 发送聊天消息
 
 ### 文件接口
+
 - `POST /api/files/upload` - 上传文件
 
 ## 配置说明
@@ -161,12 +171,14 @@ API 基础路径配置：`frontend/src/utils/request.ts`
 ## 开发说明
 
 ### 后端开发
+
 1. 使用 Maven 管理依赖
 2. 遵循 Spring Boot 最佳实践
 3. 使用 MyBatis-Plus 进行数据库操作
 4. 使用 JWT 进行身份认证
 
 ### 前端开发
+
 1. 使用 pnpm 管理依赖
 2. 使用 TypeScript 保证类型安全
 3. 使用 Ant Design 组件库
@@ -176,10 +188,12 @@ API 基础路径配置：`frontend/src/utils/request.ts`
 ## 部署说明
 
 ### 后端部署
+
 1. 构建 jar 包：`mvn clean package`
 2. 运行 jar 包：`java -jar target/ai-demo-1.0.0.jar`
 
 ### 前端部署
+
 1. 构建静态文件：`pnpm build`
 2. 将 `dist` 目录部署到静态文件服务器
 

@@ -17,4 +17,13 @@ public class ChatRequest {
     private String model;
 
     private Boolean stream = false;
+
+    private Object tools;
+
+    private Object messages;
+
+    /**
+     * 工具执行结果（用于第二次调用）
+     */
+    private Object toolResults;
 }

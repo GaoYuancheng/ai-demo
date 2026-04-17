@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { CommonModule } from '../common/common.module';
-import { ToolsModule } from './tools/tools.module';
-import { SkillsModule } from './skills/skills.module';
 import { ApiProxyModule } from './api-proxy/api-proxy.module';
 import { ChatProcessModule } from './chat-process/chat-process.module';
 import { AuthController } from './controllers/auth.controller';
@@ -24,8 +22,6 @@ import { LoggingInterceptor } from '../common/interceptors/logging.interceptor';
       envFilePath: '.env',
     }),
     CommonModule,
-    ToolsModule,
-    SkillsModule,
     ApiProxyModule,
     ChatProcessModule,
   ],

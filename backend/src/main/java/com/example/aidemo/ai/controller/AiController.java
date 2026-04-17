@@ -28,12 +28,41 @@ public class AiController {
     private final AiService aiService;
     private final ExecutorService executorService = Executors.newCachedThreadPool();
 
+    /**
+     * 判断是否需要工具调用（第一次调用，非流式，不入库）
+     * 
+     * @param userId  用户ID
+     * @param request 聊天请求
+     * @return 工具判断结果
+     */
+    @PostMapping("/check-tools")
+    public Result<ToolCheckResponse> checkTools(@CurrentUser Long userId, @Valid @RequestBody ChatRequest request) {
+        log.info("Check tools request: userId={}, sessionId={}, message={}, model={}, tools={}", userId,
+                request.getSessionId(),
+                request.getMessage(), request.getModel(), request.getTools());
+
+        ToolCheckResponse response = aiService.checkTools(userId, request);
+        return Result.success(response);
+    }
+
     @PostMapping(value = "/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Object chat(@CurrentUser Long userId, @Valid @RequestBody ChatRequest request) {
-        log.info("Chat request: userId={}, sessionId={}, message={}", userId, request.getSessionId(), request.getMessage());
+        log.info("Chat request: userId={}, sessionId={}, message={}, model={}, tools={}", userId,
+                request.getSessionId(),
+                request.getMessage(), request.getModel(), request.getTools());
 
         if (Boolean.TRUE.equals(request.getStream())) {
             return createSseEmitter(userId, request);
+        }
+
+        // 检查是否有messages参数，如果有，说明是工具调用后的第二次请求
+        if (request.getMessages() != null) {
+            // 调用AiService的chatWithTools方法
+            com.fasterxml.jackson.databind.JsonNode response = aiService.chatWithTools(
+                    (java.util.List<java.util.Map<String, Object>>) request.getMessages(),
+                    request.getModel(),
+                    request.getTools());
+            return response;
         }
 
         ChatResponse response = aiService.chat(userId, request);
@@ -91,7 +120,7 @@ public class AiController {
 
     @PostMapping("/session/create")
     public Result<SessionResponse> createSession(@CurrentUser Long userId,
-                                                  @RequestBody(required = false) CreateSessionRequest request) {
+            @RequestBody(required = false) CreateSessionRequest request) {
         if (request == null) {
             request = new CreateSessionRequest();
         }
@@ -107,14 +136,14 @@ public class AiController {
 
     @GetMapping("/chat/history")
     public Result<ChatHistoryResponse> getChatHistory(@CurrentUser Long userId,
-                                                       @RequestParam String sessionId) {
+            @RequestParam String sessionId) {
         ChatHistoryResponse response = aiService.getChatHistory(userId, sessionId);
         return Result.success(response);
     }
 
     @DeleteMapping("/session/{sessionId}")
     public Result<Void> deleteSession(@CurrentUser Long userId,
-                                       @PathVariable String sessionId) {
+            @PathVariable String sessionId) {
         aiService.deleteSession(userId, sessionId);
         return Result.success("删除成功", null);
     }

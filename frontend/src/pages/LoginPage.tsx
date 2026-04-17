@@ -37,7 +37,16 @@ export default function LoginPage() {
         title="AI Demo 登录"
         style={{ width: 400, boxShadow: "0 4px 12px rgba(0,0,0,0.15)" }}
       >
-        <Form name="login" onFinish={onFinish} autoComplete="off" size="large">
+        <Form
+          initialValues={{
+            username: "admin",
+            password: "123456",
+          }}
+          name="login"
+          onFinish={onFinish}
+          autoComplete="off"
+          size="large"
+        >
           <Form.Item
             name="username"
             rules={[{ required: true, message: "请输入用户名" }]}

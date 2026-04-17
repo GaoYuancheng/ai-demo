@@ -15,31 +15,50 @@ export class AiController {
   ) {}
 
   /**
-   * 发送聊天消息（核心，集成Skills/Tools调用）
+   * 发送聊天消息（核心，集成Tools调用）
+   * 按照文档要求：第一次非流式判断工具，第二次流式获取回答
    */
   @Post('chat')
   async chat(@Body() chatData: any, @Res() response: Response) {
     const { sessionId, message, stream } = chatData;
 
-    const processedMessage = await this.chatProcessService.processChatRequest(message, sessionId);
+    // 获取工具列表
+    const tools = await this.chatProcessService.getTools();
 
-    const enhancedChatData = {
+    // 第一步：第一次调用 Java（非流式，判断是否需要工具）
+    const toolCheckData = {
       ...chatData,
-      message: processedMessage,
+      stream: false,
+      tools,
     };
 
-    if (stream) {
-      // 流式响应处理
-      await this.apiProxyService.aiChat(enhancedChatData, response);
-    } else {
-      // 非流式响应处理
-      const apiResponse = await this.apiProxyService.aiChat(enhancedChatData, null);
-      const processedResponse = await this.chatProcessService.processChatResponse(
-        apiResponse,
-        sessionId,
-      );
-      response.json(processedResponse);
+    const toolCheckResponse = await this.apiProxyService.checkTools(toolCheckData);
+
+    if (!toolCheckResponse.needsTools) {
+      // 不需要工具调用，直接返回内容
+      response.json({
+        content: toolCheckResponse.content,
+        done: true,
+      });
+      return;
     }
+
+    // 第二步：需要工具调用，执行 Mock 工具
+    const toolResults = await this.chatProcessService.executeToolCalls(
+      toolCheckResponse.toolCalls,
+      sessionId,
+    );
+
+    // 第三步：第二次调用 Java（流式，获取最终回答）
+    const streamData = {
+      ...chatData,
+      stream: true,
+      tools,
+      toolResults,
+    };
+
+    // 流式响应处理
+    await this.apiProxyService.aiChat(streamData, response);
   }
 
   /**

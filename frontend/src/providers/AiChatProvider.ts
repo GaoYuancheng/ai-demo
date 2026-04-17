@@ -16,11 +16,16 @@ interface ChatOutput {
   content?: string;
   done?: boolean;
   error?: string;
+  tool_call_id?: string;
+  role?: string;
+  name?: string;
+  reasoning_content?: string;
 }
 
 interface ChatMessage {
   id: string;
   content: string;
+  reasoningContent?: string;
   role: "user" | "assistant";
   sessionId?: string;
   status: "loading" | "success" | "error";
@@ -95,14 +100,35 @@ export class AiChatProvider extends AbstractChatProvider<
         id: originMessage?.id || `msg-${Date.now()}`,
         status: "success",
         content: originMessage?.content || "",
+        reasoningContent: originMessage?.reasoningContent || "",
         role: "assistant",
       };
     }
 
-    if (chunk.content) {
+    if (chunk.content || chunk.reasoning_content) {
+      const content = (originMessage?.content || "") + (chunk.content || "");
+      const reasoningContent = chunk.reasoning_content
+        ? (originMessage?.reasoningContent || "") + chunk.reasoning_content
+        : originMessage?.reasoningContent || "";
       return {
         id: originMessage?.id || `msg-${Date.now()}`,
-        content: `${originMessage?.content || ""}${chunk.content}`,
+        content: content,
+        reasoningContent: reasoningContent,
+        role: "assistant",
+        status: "loading",
+        sessionId: this.currentSessionId,
+      };
+    }
+
+    // 处理工具调用的响应
+    if (chunk.role === "tool" && chunk.content) {
+      const toolContent =
+        typeof chunk.content === "object"
+          ? JSON.stringify(chunk.content)
+          : chunk.content;
+      return {
+        id: originMessage?.id || `msg-${Date.now()}`,
+        content: `${originMessage?.content || ""}[工具执行结果] ${toolContent}`,
         role: "assistant",
         status: "loading",
         sessionId: this.currentSessionId,
@@ -166,7 +192,46 @@ export const createAiChatProvider = () => {
                 if (jsonStr && jsonStr !== "[DONE]") {
                   try {
                     const json = JSON.parse(jsonStr);
-                    controller.enqueue(json);
+                    // 检查是否是嵌套的SSE数据
+                    if (json.content && json.content.startsWith("data: ")) {
+                      // 处理嵌套的SSE数据
+                      const nestedLines = json.content.split("\n");
+                      for (const nestedLine of nestedLines) {
+                        if (nestedLine.startsWith("data:")) {
+                          const nestedJsonStr = nestedLine.substring(5).trim();
+                          if (nestedJsonStr && nestedJsonStr !== "[DONE]") {
+                            try {
+                              const nestedJson = JSON.parse(nestedJsonStr);
+                              if (
+                                nestedJson.choices &&
+                                nestedJson.choices.length > 0
+                              ) {
+                                const choice = nestedJson.choices[0];
+                                if (
+                                  choice.delta &&
+                                  (choice.delta.content ||
+                                    choice.delta.reasoning_content)
+                                ) {
+                                  controller.enqueue({
+                                    content: choice.delta.content,
+                                    reasoning_content:
+                                      choice.delta.reasoning_content,
+                                  });
+                                }
+                              }
+                            } catch (e) {
+                              console.error(
+                                "Failed to parse nested SSE data:",
+                                nestedJsonStr,
+                                e,
+                              );
+                            }
+                          }
+                        }
+                      }
+                    } else {
+                      controller.enqueue(json);
+                    }
                   } catch (e) {
                     console.error("Failed to parse SSE data:", jsonStr, e);
                   }

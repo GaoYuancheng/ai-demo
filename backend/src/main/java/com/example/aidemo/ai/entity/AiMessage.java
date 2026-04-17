@@ -1,6 +1,7 @@
 package com.example.aidemo.ai.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
@@ -22,6 +23,9 @@ public class AiMessage {
     private String role;
 
     private String content;
+
+    @TableField("reasoning_content")
+    private String reasoningContent;
 
     private LocalDateTime createTime;
 }

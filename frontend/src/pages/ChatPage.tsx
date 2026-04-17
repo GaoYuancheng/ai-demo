@@ -1,5 +1,5 @@
 import { GetRef, Modal, message } from "antd";
-import { Bubble, Sender } from "@ant-design/x";
+import { Bubble, Sender, Think } from "@ant-design/x";
 import { useXChat } from "@ant-design/x-sdk";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useAuth } from "@/contexts/AuthContext";
@@ -58,7 +58,7 @@ export default function ChatPage() {
       };
     },
   });
-
+  console.log("messages", messages);
   useEffect(() => {
     loadSessions();
     loadConfig();
@@ -107,11 +107,12 @@ export default function ChatPage() {
     try {
       const data = await aiApi.getChatHistory(sessionId);
       const formattedMessages = data.messages.map(
-        (msg: MessageDto, index: number) => ({
+        (msg: MessageDto & { reasoningContent?: string }, index: number) => ({
           id: `msg-${index}`,
           message: {
             id: `msg-${index}`,
             content: msg.content,
+            reasoningContent: msg.reasoningContent,
             role: msg.role as "user" | "assistant",
             status: "success" as const,
           },
@@ -192,7 +193,20 @@ export default function ChatPage() {
     placement:
       msg.message.role === "user" ? ("end" as const) : ("start" as const),
     typing: msg.status === "loading",
-    content: msg.message.content,
+    content: msg.message.reasoningContent ? (
+      <>
+        <Think
+          style={{ marginBottom: 12 }}
+          title="思考过程"
+          loading={msg.status === "loading"}
+        >
+          {msg.message.reasoningContent}
+        </Think>
+        {msg.message.content}
+      </>
+    ) : (
+      msg.message.content
+    ),
     avatar: msg.message.role === "assistant" ? "🤖" : undefined,
     styles: {
       content: {
@@ -201,6 +215,7 @@ export default function ChatPage() {
       },
     },
   }));
+  console.log("🚀 ~ ChatPage ~ items:", messages);
 
   return (
     <div className="chat-page">

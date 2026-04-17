@@ -48,6 +48,7 @@ async function bootstrap() {
 
   logger.log(`应用启动成功，监听端口: ${port}`);
   logger.log(`环境: ${process.env.NODE_ENV || 'development'}`);
+  logger.log(`后端服务URL: ${process.env.BACKEND_BASE_URL || 'default'}`);
 }
 
 bootstrap();

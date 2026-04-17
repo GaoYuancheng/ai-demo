@@ -16,5 +16,6 @@ public class MessageDto {
 
     private String role;
     private String content;
+    private String reasoningContent;
     private LocalDateTime createTime;
 }

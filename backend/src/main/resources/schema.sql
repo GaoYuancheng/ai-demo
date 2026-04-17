@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS ai_message (
     session_id VARCHAR(50) NOT NULL,
     role VARCHAR(20) NOT NULL,
     content TEXT,
+    reasoning_content TEXT,
     create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
