@@ -29,12 +29,46 @@
   width: 100%;
 }
 
+.session-title-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 8px;
+}
+
+.session-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.session-item:hover .session-actions {
+  opacity: 1;
+}
+
+.more-button {
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.more-button:hover {
+  background-color: #f0f0f0;
+}
+
 .session-title {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   flex: 1;
   max-width: 150px;
+}
+
+.edit-input {
+  width: 150px;
+  margin-right: 8px;
 }
 
 .chat-main {

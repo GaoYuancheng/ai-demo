@@ -148,6 +148,22 @@ public class AiController {
         return Result.success("删除成功", null);
     }
 
+    /**
+     * 重命名会话
+     * 
+     * @param userId    用户ID
+     * @param sessionId 会话ID
+     * @param request   重命名请求
+     * @return 重命名结果
+     */
+    @PutMapping("/session/{sessionId}/rename")
+    public Result<Void> renameSession(@CurrentUser Long userId,
+            @PathVariable String sessionId,
+            @RequestBody RenameSessionRequest request) {
+        aiService.renameSession(userId, sessionId, request.getTitle());
+        return Result.success("重命名成功", null);
+    }
+
     @GetMapping("/config")
     public Result<AiConfigResponse> getConfig() {
         AiConfigResponse response = aiService.getConfig();

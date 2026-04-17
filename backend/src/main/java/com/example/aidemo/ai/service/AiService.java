@@ -352,6 +352,26 @@ public class AiService {
     }
 
     /**
+     * 重命名会话
+     * 
+     * @param userId    用户ID
+     * @param sessionId 会话ID
+     * @param title     新标题
+     * @throws BusinessException 当会话不存在时抛出
+     */
+    @Transactional
+    public void renameSession(Long userId, String sessionId, String title) {
+        AiSession session = sessionMapper.selectById(sessionId);
+        if (session == null || !session.getUserId().equals(userId)) {
+            throw new BusinessException(ErrorCode.NOT_FOUND, "会话不存在");
+        }
+
+        session.setTitle(title);
+        session.setUpdateTime(LocalDateTime.now());
+        sessionMapper.updateById(session);
+    }
+
+    /**
      * 获取AI配置
      * 
      * @return AI配置响应对象

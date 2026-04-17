@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Delete, Body, Param, Query, Res } from '@nestjs/common';
+import { Controller, Post, Get, Delete, Body, Param, Query, Res, Put } from '@nestjs/common';
 import { Response } from 'express';
 import { ApiProxyService } from '../api-proxy/services/api-proxy.service';
 import { ChatProcessService } from '../chat-process/services/chat-process.service';
@@ -91,6 +91,14 @@ export class AiController {
   @Delete('session/:sessionId')
   async deleteSession(@Param('sessionId') sessionId: string) {
     return this.apiProxyService.deleteAiSession(sessionId);
+  }
+
+  /**
+   * 重命名会话
+   */
+  @Put('session/:sessionId/rename')
+  async renameSession(@Param('sessionId') sessionId: string, @Body() data: any) {
+    return this.apiProxyService.renameAiSession(sessionId, data);
   }
 
   /**

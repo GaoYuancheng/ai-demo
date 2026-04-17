@@ -139,32 +139,6 @@ export default function ChatPage() {
     }
   };
 
-  const handleDeleteSession = async (sessionId: string) => {
-    Modal.confirm({
-      title: "确认删除",
-      content: "确定要删除这个会话吗？",
-      onOk: async () => {
-        try {
-          await aiApi.deleteSession(sessionId);
-          setSessions(sessions.filter((s) => s.sessionId !== sessionId));
-          if (currentSessionId === sessionId) {
-            const newCurrentId =
-              sessions.length > 1
-                ? sessions.find((s) => s.sessionId !== sessionId)?.sessionId ||
-                  null
-                : null;
-            setCurrentSessionId(newCurrentId);
-            provider.clearSession();
-            setMessages([]);
-          }
-          message.success("删除成功");
-        } catch (error) {
-          message.error("删除失败");
-        }
-      },
-    });
-  };
-
   const handleSendMessage = useCallback(
     (content: string) => {
       if (!content.trim()) return;
@@ -224,7 +198,7 @@ export default function ChatPage() {
         currentSessionId={currentSessionId}
         onSessionSelect={handleSessionSelect}
         onCreateSession={handleCreateSession}
-        onDeleteSession={handleDeleteSession}
+        onSessionUpdate={setSessions}
       />
       <div className="chat-main">
         <ChatHeader

@@ -345,6 +345,13 @@ export class ApiProxyService {
   }
 
   /**
+   * AI接口转发 - 重命名会话
+   */
+  async renameAiSession(sessionId: string, data: any) {
+    return this.proxyRequest('PUT', `/api/v1/ai/session/${sessionId}/rename`, data);
+  }
+
+  /**
    * AI接口转发 - 获取AI配置
    */
   async getAiConfig() {
@@ -358,73 +365,3 @@ export class ApiProxyService {
     return this.proxyRequest('POST', '/api/v1/file/upload', data);
   }
 }
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"用户","role":"assistant"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"想"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"查询杭州2"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"02"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"6年4月"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"1"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"6日的天气。"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"我需要使用get_current"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"_weather"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"工具来查询天气"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"信息。\n\n但是"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"需要注意，这个工具"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"只能"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"查询当前或近期的"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"天气，无法"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"预测未来特定日期"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"（如20"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"26年）"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"的天气。不过我还是"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"会调用这个工具"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"看看返回什么结果"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"。\n\n参数需要"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"location，用户说的是"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"\"杭州\"，"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"所以我应该使用\""},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"杭州市\"作为location"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":"参数。"},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":null,"tool_calls":[{"index":0,"id":"call_b24c21aa4905423d813479e4","type":"function","function":{"name":"get_current_weather","arguments":""}}]},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":null,"tool_calls":[{"index":0,"id":"","type":"function","function":{"arguments":"{\"location\": \"杭州市"}}]},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":null,"tool_calls":[{"index":0,"id":"","type":"function","function":{"arguments":"\""}}]},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"content":null,"reasoning_content":null,"tool_calls":[{"index":0,"id":"","type":"function","function":{"arguments":"}"}}]},"finish_reason":null,"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"delta":{"tool_calls":[{"function":{"arguments":""},"index":0,"id":"","type":"function"}]},"index":0}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: {"choices":[{"finish_reason":"tool_calls","delta":{"content":"","reasoning_content":null},"index":0,"logprobs":null}],"object":"chat.completion.chunk","usage":null,"created":1776307217,"system_fingerprint":null,"model":"qwen3.5-flash","id":"chatcmpl-34d8a53b-a10d-9c35-b462-cfededf90646"}
-
-// data: [DONE]

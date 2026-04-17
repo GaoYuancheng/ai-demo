@@ -103,6 +103,10 @@ export const aiApi = {
     await request.delete<Result<null>>(`/ai/session/${sessionId}`);
   },
 
+  renameSession: async (sessionId: string, title: string): Promise<void> => {
+    await request.put<Result<null>>(`/ai/session/${sessionId}/rename`, { title });
+  },
+
   getConfig: async (): Promise<AiConfigResponse> => {
     const response = await request.get<Result<AiConfigResponse>>('/ai/config');
     return response.data.data;
