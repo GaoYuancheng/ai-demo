@@ -58,7 +58,7 @@ export default function ChatPage() {
       };
     },
   });
-  console.log("messages", messages);
+
   useEffect(() => {
     loadSessions();
     loadConfig();
@@ -120,6 +120,12 @@ export default function ChatPage() {
         }),
       );
       setMessages(formattedMessages);
+      setTimeout(() => {
+        if (chatContentRef.current) {
+          chatContentRef.current.scrollTop =
+            chatContentRef.current.scrollHeight;
+        }
+      }, 0);
     } catch (error) {
       message.error("加载历史消息失败");
     } finally {
@@ -127,9 +133,14 @@ export default function ChatPage() {
     }
   };
 
+  const formatDefaultTitle = (date: Date) => {
+    const pad = (n: number) => n.toString().padStart(2, "0");
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+  };
+
   const handleCreateSession = async () => {
     try {
-      const session = await aiApi.createSession();
+      const session = await aiApi.createSession(formatDefaultTitle(new Date()));
       setSessions([session, ...sessions]);
       setCurrentSessionId(session.sessionId);
       provider.clearSession();
@@ -189,7 +200,6 @@ export default function ChatPage() {
       },
     },
   }));
-  console.log("🚀 ~ ChatPage ~ items:", messages);
 
   return (
     <div className="chat-page">

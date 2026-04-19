@@ -106,9 +106,11 @@ export class AiChatProvider extends AbstractChatProvider<
     }
 
     if (chunk.content || chunk.reasoning_content) {
-      const content = (originMessage?.content || "") + (chunk.content || "");
+      const content =
+        (originMessage?.content || "") + (chunk.content?.trim() || "");
       const reasoningContent = chunk.reasoning_content
-        ? (originMessage?.reasoningContent || "") + chunk.reasoning_content
+        ? (originMessage?.reasoningContent || "") +
+          (chunk.reasoning_content?.trim() || "")
         : originMessage?.reasoningContent || "";
       return {
         id: originMessage?.id || `msg-${Date.now()}`,
@@ -207,15 +209,16 @@ export const createAiChatProvider = () => {
                                 nestedJson.choices.length > 0
                               ) {
                                 const choice = nestedJson.choices[0];
+
                                 if (
                                   choice.delta &&
                                   (choice.delta.content ||
                                     choice.delta.reasoning_content)
                                 ) {
                                   controller.enqueue({
-                                    content: choice.delta.content,
+                                    content: choice.delta.content?.trim(),
                                     reasoning_content:
-                                      choice.delta.reasoning_content,
+                                      choice.delta.reasoning_content?.trim(),
                                   });
                                 }
                               }

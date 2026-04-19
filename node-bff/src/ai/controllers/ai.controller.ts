@@ -35,11 +35,15 @@ export class AiController {
     const toolCheckResponse = await this.apiProxyService.checkTools(toolCheckData);
 
     if (!toolCheckResponse.needsTools) {
-      // 不需要工具调用，直接返回内容
-      response.json({
-        content: toolCheckResponse.content,
-        done: true,
-      });
+      // 不需要工具调用，使用流式返回
+      const streamData = {
+        ...chatData,
+        stream: true,
+        tools,
+      };
+
+      // 流式响应处理
+      await this.apiProxyService.aiChat(streamData, response);
       return;
     }
 
