@@ -1,4 +1,4 @@
-import { GetRef, Modal, message } from "antd";
+import { GetRef, message } from "antd";
 import { Bubble, Sender, Think } from "@ant-design/x";
 import { useXChat } from "@ant-design/x-sdk";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -11,6 +11,7 @@ import {
   ChatInput,
   ChatOutput,
 } from "@/providers/AiChatProvider";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 import ChatSidebar from "./ChatSidebar";
 import ChatHeader from "./ChatHeader";
 import "./ChatPage.css";
@@ -187,10 +188,16 @@ export default function ChatPage() {
         >
           {msg.message.reasoningContent}
         </Think>
-        {msg.message.content}
+        <MarkdownRenderer
+          content={msg.message.content}
+          isStreaming={msg.status === "loading"}
+        />
       </>
     ) : (
-      msg.message.content
+      <MarkdownRenderer
+        content={msg.message.content}
+        isStreaming={msg.status === "loading"}
+      />
     ),
     avatar: msg.message.role === "assistant" ? "🤖" : undefined,
     styles: {

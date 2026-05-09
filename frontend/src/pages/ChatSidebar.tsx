@@ -36,7 +36,7 @@ export default function ChatSidebar({
   const [renameTitle, setRenameTitle] = useState("");
 
   // 置顶会话
-  const handlePinSession = async (sessionId: string) => {
+  const handlePinSession = async (_sessionId: string) => {
     try {
       message.info("置顶功能开发中");
     } catch (error) {
@@ -70,7 +70,7 @@ export default function ChatSidebar({
   };
 
   // 举报会话
-  const handleReportSession = async (sessionId: string) => {
+  const handleReportSession = async (_sessionId: string) => {
     try {
       message.info("举报功能开发中");
     } catch (error) {

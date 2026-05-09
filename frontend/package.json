@@ -14,6 +14,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.1",
     "@ant-design/x": "^2.4.0",
+    "@ant-design/x-markdown": "^2.7.0",
     "@ant-design/x-sdk": "^2.4.0",
     "antd": "^6.3.4",
     "axios": "^1.7.9",
@@ -33,11 +34,5 @@
     "eslint-plugin-react-refresh": "^0.4.16",
     "typescript": "^5.7.2",
     "vite": "^8.0.2"
-  },
-  "pnpm": {
-    "overrides": {
-      "@typescript-eslint/parser": "^8.18.0",
-      "@typescript-eslint/eslint-plugin": "^8.18.0"
-    }
   }
 }
