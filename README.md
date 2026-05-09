@@ -207,3 +207,26 @@ API 基础路径配置：`frontend/src/utils/request.ts`
 ## 许可证
 
 本项目采用 MIT 许可证。
+
+## 启动等相关命令
+
+### 数据库
+
+cd "C:\Program Files\MySQL\MySQL Server 8.0\bin"
+.\mysql.exe -u root -p
+
+### node 服务
+
+cd node-bff && pnpm start
+
+### 后端
+
+cd backend && mvn spring-boot:run
+
+### 前端
+
+cd frontend && pnpm dev
+
+### 偍端服务
+
+Stop-Process -Id (Get-NetTCPConnection -LocalPort 8080).OwningProcess -Force
