@@ -12,9 +12,9 @@ import {
   ChatOutput,
 } from "@/providers/AiChatProvider";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
-import ChatSidebar from "./ChatSidebar";
-import ChatHeader from "./ChatHeader";
-import "./ChatPage.css";
+import ChatSidebar from "../ChatSidebar";
+import ChatHeader from "../ChatHeader";
+import "./index.css";
 
 export default function ChatPage() {
   const { token } = useAuth();

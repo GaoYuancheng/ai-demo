@@ -1,5 +1,5 @@
 import { memo, useMemo } from "react";
-import ChartRenderer, { ChartConfig } from "./ChartRenderer";
+import ChartRenderer, { ChartConfig } from "../ChartRenderer";
 
 /**
  * Markdown 图表组件属性

@@ -1,6 +1,6 @@
 import { XMarkdown } from "@ant-design/x-markdown";
 import { memo, useMemo } from "react";
-import MarkdownChart from "./MarkdownChart";
+import MarkdownChart from "../MarkdownChart";
 
 /**
  * Markdown 渲染组件属性
