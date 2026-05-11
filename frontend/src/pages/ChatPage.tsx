@@ -207,6 +207,10 @@ export default function ChatPage() {
       },
     },
   }));
+  console.log(
+    "🚀 ~ ChatPage ~ messages:",
+    messages?.[messages.length - 1]?.message?.content,
+  );
 
   return (
     <div className="chat-page">

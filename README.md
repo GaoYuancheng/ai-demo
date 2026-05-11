@@ -230,3 +230,9 @@ cd frontend && pnpm dev
 ### 偍端服务
 
 Stop-Process -Id (Get-NetTCPConnection -LocalPort 8080).OwningProcess -Force
+
+### 问题
+
+1. 想要ai直接返回工具执行结果需要告知ai
+   错误： description: '当你需要绘制图表时使用此工具。支持折线图、柱状图、饼图、散点图和面积图。',
+   正确： description: '当你需要绘制图表时使用此工具，把工具的原结果直接返回给用户即可，不需要额外处理。 `chart` 部分会自动渲染成图表。支持折线图、柱状图、饼图、散点图和面积图。',

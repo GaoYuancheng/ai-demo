@@ -122,3 +122,45 @@
   background: #fff;
   border-top: 1px solid #f0f0f0;
 }
+
+/* 图表相关样式 */
+.markdown-renderer {
+  width: 100%;
+}
+
+.markdown-chart {
+  margin: 16px 0;
+  padding: 16px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #e8e8e8;
+  overflow: hidden;
+}
+
+.markdown-chart:hover {
+  border-color: #d9d9d9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.markdown-chart-error {
+  margin: 16px 0;
+  padding: 16px;
+  background-color: #fff2f0;
+  border: 1px solid #ffccc7;
+  border-radius: 8px;
+  color: #cf1322;
+}
+
+.markdown-chart-error pre {
+  margin-top: 8px;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+  overflow: auto;
+  font-size: 12px;
+  color: #333;
+}
+
+.chart-renderer {
+  width: 100%;
+}

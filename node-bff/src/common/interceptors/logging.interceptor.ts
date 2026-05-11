@@ -1,10 +1,4 @@
-import {
-  Injectable,
-  NestInterceptor,
-  ExecutionContext,
-  CallHandler,
-  Logger,
-} from '@nestjs/common';
+import { Injectable, NestInterceptor, ExecutionContext, CallHandler, Logger } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
@@ -21,24 +15,14 @@ export class LoggingInterceptor implements NestInterceptor {
     const { method, url, body, query, headers } = request;
     const startTime = Date.now();
 
-    this.logger.log(
-      `请求开始: ${method} ${url}`,
-    );
+    this.logger.log(`请求开始: ${method} ${url}`);
 
     return next.handle().pipe(
-      tap({
-        next: (response) => {
-          const duration = Date.now() - startTime;
-          this.logger.log(
-            `请求成功: ${method} ${url} - 状态: ${response?.statusCode || 200} - 耗时: ${duration}ms`,
-          );
-        },
-        error: (error) => {
-          const duration = Date.now() - startTime;
-          this.logger.error(
-            `请求失败: ${method} ${url} - 错误: ${error.message} - 耗时: ${duration}ms`,
-          );
-        },
+      tap(response => {
+        const duration = Date.now() - startTime;
+        this.logger.log(
+          `请求成功: ${method} ${url} - 状态: ${response?.statusCode || 200} - 耗时: ${duration}ms`,
+        );
       }),
     );
   }
